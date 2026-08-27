@@ -137,8 +137,8 @@ RUN set -eux; \
 
 COPY SnowLuma.Framework.tar.gz /tmp/framework.tar.gz
 RUN tar -xzf /tmp/framework.tar.gz -C /some/target && rm /tmp/framework.tar.gz
-    --mount=type=bind,source=supervisord.conf,target=/tmp/supervisord.conf,readonly \
-    --mount=type=bind,source=start.sh,target=/tmp/start.sh,readonly \
+RUN --mount=type=bind,source=supervisord.conf,target=/tmp/supervisord.conf,readonly \
+--mount=type=bind,source=start.sh,target=/tmp/start.sh,readonly \
     install -m 644 /tmp/supervisord.conf /etc/supervisord.conf && \
     install -m 755 /tmp/start.sh /root/start.sh && \
     tar -xzf /tmp/framework.tar.gz -C "${SNOWLUMA_HOME}" && \
