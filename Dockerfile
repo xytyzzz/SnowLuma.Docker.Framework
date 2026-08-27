@@ -63,14 +63,14 @@ RUN echo 'Binary::apt::APT::Keep-Downloaded-Packages "true";' > /etc/apt/apt.con
 RUN apt-get update && apt-get install -y ... \
     && rm -rf /var/lib/apt/lists/*
 RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
-    apt-get update && apt-get install -y --no-install-recommends \
+RUN apt-get update && apt-get install -y --no-install-recommends \
       ffmpeg \
       fonts-wqy-zenhei
 
 RUN apt-get update && apt-get install -y ... \
     && rm -rf /var/lib/apt/lists/*
 RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
-    apt-get update && apt-get install -y --no-install-recommends \
+RUN apt-get update && apt-get install -y --no-install-recommends \
       libasound2 \
       libatspi2.0-0 \
       libgbm1 \
@@ -82,7 +82,7 @@ RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
 RUN apt-get update && apt-get install -y ... \
     && rm -rf /var/lib/apt/lists/*
 RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
-    apt-get update && apt-get install -y --no-install-recommends \
+RUN apt-get update && apt-get install -y --no-install-recommends \
       fluxbox \
       openbox \
       x11vnc \
