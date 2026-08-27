@@ -102,7 +102,7 @@ RUN set -eux; \
 RUN apt-get update && apt-get install -y ... \
     && rm -rf /var/lib/apt/lists/*
 RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
-    set -eux; \
+RUN set -eux; \
     qq_arch="$(dpkg --print-architecture)"; \
     case "${qq_arch}" in \
       amd64) qq_sha="${QQ_AMD64_SHA256}" ;; \
