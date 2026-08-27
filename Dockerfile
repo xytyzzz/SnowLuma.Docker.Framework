@@ -29,8 +29,8 @@ ENV DEBIAN_FRONTEND=noninteractive \
 # Keep independent runtime groups in separate layers. Docker pulls up to three
 # layers concurrently by default, so one monolithic desktop layer becomes a
 # download bottleneck even when the total image size is unchanged.
-RUN --mount=type=cache,target=/var/cache/apt,id=cache-apt-ubuntu \
-    apt-get update && apt-get install -y ...
+RUN apt-get update && apt-get install -y ... \
+    && rm -rf /var/lib/apt/lists/*
     --mount=type=cache,target=/var/lib/apt,sharing=locked \
     rm -f /etc/apt/apt.conf.d/docker-clean && \
     echo 'Binary::apt::APT::Keep-Downloaded-Packages "true";' > /etc/apt/apt.conf.d/keep-cache && \
@@ -61,15 +61,15 @@ RUN --mount=type=cache,target=/var/cache/apt,id=cache-apt-ubuntu \
       /app/.local/share && \
     mkdir -p /etc/supervisor/conf.d
 
-RUN --mount=type=cache,target=/var/cache/apt,id=cache-apt-ubuntu \
-    apt-get update && apt-get install -y ...
+RUN apt-get update && apt-get install -y ... \
+    && rm -rf /var/lib/apt/lists/*
     --mount=type=cache,target=/var/lib/apt,sharing=locked \
     apt-get update && apt-get install -y --no-install-recommends \
       ffmpeg \
       fonts-wqy-zenhei
 
-RUN --mount=type=cache,target=/var/cache/apt,id=cache-apt-ubuntu \
-    apt-get update && apt-get install -y ...
+RUN apt-get update && apt-get install -y ... \
+    && rm -rf /var/lib/apt/lists/*
     --mount=type=cache,target=/var/lib/apt,sharing=locked \
     apt-get update && apt-get install -y --no-install-recommends \
       libasound2 \
@@ -80,8 +80,8 @@ RUN --mount=type=cache,target=/var/cache/apt,id=cache-apt-ubuntu \
       libnss3 \
       libsecret-1-0
 
-RUN --mount=type=cache,target=/var/cache/apt,id=cache-apt-ubuntu \
-    apt-get update && apt-get install -y ...
+RUN apt-get update && apt-get install -y ... \
+    && rm -rf /var/lib/apt/lists/*
     --mount=type=cache,target=/var/lib/apt,sharing=locked \
     apt-get update && apt-get install -y --no-install-recommends \
       fluxbox \
@@ -100,8 +100,8 @@ RUN set -eux; \
 # chown would copy the whole tree into a second layer.
 # Official Linux QQ first; a pinned GitHub copy of the same files is only used
 # when the CDN object is missing. Never follow a floating latest tag.
-RUN --mount=type=cache,target=/var/cache/apt,id=cache-apt-ubuntu \
-    apt-get update && apt-get install -y ...
+RUN apt-get update && apt-get install -y ... \
+    && rm -rf /var/lib/apt/lists/*
     --mount=type=cache,target=/var/lib/apt,sharing=locked \
     set -eux; \
     qq_arch="$(dpkg --print-architecture)"; \
