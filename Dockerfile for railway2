@@ -1,0 +1,6 @@
+# 原写法（报错）
+RUN --mount=type=bind,source=SnowLuma.Framework.tar.gz,target=/tmp/framework.tar.gz,readonly ...
+
+# 改法：先用 COPY 把文件放进镜像
+COPY SnowLuma.Framework.tar.gz /tmp/framework.tar.gz
+RUN tar -xzf /tmp/framework.tar.gz ...  # 然后执行你的解压/安装命令
