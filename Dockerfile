@@ -62,14 +62,14 @@ RUN echo 'Binary::apt::APT::Keep-Downloaded-Packages "true";' > /etc/apt/apt.con
 
 RUN apt-get update && apt-get install -y ... \
     && rm -rf /var/lib/apt/lists/*
-    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
     apt-get update && apt-get install -y --no-install-recommends \
       ffmpeg \
       fonts-wqy-zenhei
 
 RUN apt-get update && apt-get install -y ... \
     && rm -rf /var/lib/apt/lists/*
-    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
     apt-get update && apt-get install -y --no-install-recommends \
       libasound2 \
       libatspi2.0-0 \
@@ -81,7 +81,7 @@ RUN apt-get update && apt-get install -y ... \
 
 RUN apt-get update && apt-get install -y ... \
     && rm -rf /var/lib/apt/lists/*
-    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
     apt-get update && apt-get install -y --no-install-recommends \
       fluxbox \
       openbox \
@@ -101,7 +101,7 @@ RUN set -eux; \
 # when the CDN object is missing. Never follow a floating latest tag.
 RUN apt-get update && apt-get install -y ... \
     && rm -rf /var/lib/apt/lists/*
-    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
     set -eux; \
     qq_arch="$(dpkg --print-architecture)"; \
     case "${qq_arch}" in \
