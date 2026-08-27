@@ -31,7 +31,6 @@ ENV DEBIAN_FRONTEND=noninteractive \
 # download bottleneck even when the total image size is unchanged.
 RUN apt-get update && apt-get install -y ... \
     && rm -rf /var/lib/apt/lists/*
-RUN --mount=type=cache,target=/var/lib/apt,sharing=locked \
     rm -f /etc/apt/apt.conf.d/docker-clean && \
     echo 'Binary::apt::APT::Keep-Downloaded-Packages "true";' > /etc/apt/apt.conf.d/keep-cache && \
     apt-get update && apt-get install -y --no-install-recommends \
