@@ -29,7 +29,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
 # Keep independent runtime groups in separate layers. Docker pulls up to three
 # layers concurrently by default, so one monolithic desktop layer becomes a
 # download bottleneck even when the total image size is unchanged.
-RUN --mount=type=cache,target=/var/cache/apt,sharing=locked,id=cache-apt \
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked,id=cache-apt-ubuntu \
     apt-get update && apt-get install -y ...
     --mount=type=cache,target=/var/lib/apt,sharing=locked \
     rm -f /etc/apt/apt.conf.d/docker-clean && \
@@ -61,14 +61,14 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked,id=cache-apt \
       /app/.local/share && \
     mkdir -p /etc/supervisor/conf.d
 
-RUN --mount=type=cache,target=/var/cache/apt,sharing=locked,id=cache-apt \
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked,id=cache-apt-ubuntu \
     apt-get update && apt-get install -y ...
     --mount=type=cache,target=/var/lib/apt,sharing=locked \
     apt-get update && apt-get install -y --no-install-recommends \
       ffmpeg \
       fonts-wqy-zenhei
 
-RUN --mount=type=cache,target=/var/cache/apt,sharing=locked,id=cache-apt \
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked,id=cache-apt-ubuntu \
     apt-get update && apt-get install -y ...
     --mount=type=cache,target=/var/lib/apt,sharing=locked \
     apt-get update && apt-get install -y --no-install-recommends \
@@ -80,7 +80,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked,id=cache-apt \
       libnss3 \
       libsecret-1-0
 
-RUN --mount=type=cache,target=/var/cache/apt,sharing=locked,id=cache-apt \
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked,id=cache-apt-ubuntu \
     apt-get update && apt-get install -y ...
     --mount=type=cache,target=/var/lib/apt,sharing=locked \
     apt-get update && apt-get install -y --no-install-recommends \
@@ -100,7 +100,7 @@ RUN set -eux; \
 # chown would copy the whole tree into a second layer.
 # Official Linux QQ first; a pinned GitHub copy of the same files is only used
 # when the CDN object is missing. Never follow a floating latest tag.
-RUN --mount=type=cache,target=/var/cache/apt,sharing=locked,id=cache-apt \
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked,id=cache-apt-ubuntu \
     apt-get update && apt-get install -y ...
     --mount=type=cache,target=/var/lib/apt,sharing=locked \
     set -eux; \
@@ -136,7 +136,10 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked,id=cache-apt \
     rm -f /tmp/linuxqq.deb; \
     chmod 777 /opt/QQ
 
-RUN --mount=type=bind,source=SnowLuma.Framework.tar.gz,target=/tmp/framework.tar.gz,readonly \
+# 删除原来的 RUN --mount=type=bind 这一行
+# 替换为：
+COPY SnowLuma.Framework.tar.gz /tmp/framework.tar.gz
+RUN tar -xzf /tmp/framework.tar.gz -C /some/target && rm /tmp/framework.tar.gz
     --mount=type=bind,source=supervisord.conf,target=/tmp/supervisord.conf,readonly \
     --mount=type=bind,source=start.sh,target=/tmp/start.sh,readonly \
     install -m 644 /tmp/supervisord.conf /etc/supervisord.conf && \
@@ -159,7 +162,7 @@ RUN --mount=type=bind,source=SnowLuma.Framework.tar.gz,target=/tmp/framework.tar
 
 WORKDIR /app/data
 
-EXPOSE 5900 6081 5099 3000 3001
+#EXPOSE 5900 6081 5099 3000 3001
 
 VOLUME ["/app/data", "/app/.config", "/app/.local/share"]
 
