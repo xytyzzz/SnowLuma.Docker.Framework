@@ -31,7 +31,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
 # download bottleneck even when the total image size is unchanged.
 RUN apt-get update && apt-get install -y ... \
     && rm -rf /var/lib/apt/lists/*
-    rm -f /etc/apt/apt.conf.d/docker-clean && \
+RUN apt-get update && apt-get install -y ... && rm -rf /var/lib/apt/lists/*
     echo 'Binary::apt::APT::Keep-Downloaded-Packages "true";' > /etc/apt/apt.conf.d/keep-cache && \
     apt-get update && apt-get install -y --no-install-recommends \
       aria2 \
